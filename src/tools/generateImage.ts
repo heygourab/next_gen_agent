@@ -5,10 +5,13 @@ import { Buffer } from "node:buffer";
 
 export const generateImageDescription = {
   name: "generate_image",
-  description:
-    "Generate an image using a prompt with a diffusion model image generator like DALL-E, VQ-VAE-2, or CLIP guided diffusion.",
+  description: `Creates an image based on a user-provided prompt utilizing advanced diffusion model image generators such like DALL-E, VQ-VAE-2, or CLIP guided diffusion. For instance, a user might request, "Generate an image of a flower.`,
   parameters: z.object({
     prompt: z.string().describe("The prompt to generate the image with."),
+    reasoning: z
+      .string()
+      .optional()
+      .describe("Provide the proper reasoning for selecting this tool."),
   }),
 };
 
@@ -34,7 +37,7 @@ export const generateImage = async (toolArg: Args) => {
     }
 
     const imageBuffer = await response.arrayBuffer();
-    const imagePath = `./generated_image_${crypto.randomUUID()}.png`;
+    const imagePath = `./generated_image_${new Date().toISOString()}.png`;
     await fs.writeFile(imagePath, Buffer.from(imageBuffer));
 
     return JSON.stringify({

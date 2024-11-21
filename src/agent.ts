@@ -33,17 +33,17 @@ export const runAgent = async ({
       tools: tools || [],
     });
 
-    pushMessageToDB({ message: response.choices[0].message });
-    logMessage(response.choices[0].message);
+    pushMessageToDB({ message: response.message });
+    logMessage(response.message);
 
-    if (response.choices[0].message.content) {
+    if (response.message.content) {
       loader.succeed("Done");
       return await fetchMessagesFromDB();
     }
 
     // check is there any tool_calls
-    if (response.choices[0].message.tool_calls) {
-      const toolCall = response.choices[0].message.tool_calls[0];
+    if (response.message.tool_calls) {
+      const toolCall = response.message.tool_calls[0];
       loader.update(`Running tool: ${toolCall.function.name}...🛠️`);
       const functionResponse = await toolRunner({
         toolCallFunction: toolCall.function,

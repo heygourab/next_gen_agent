@@ -21,7 +21,7 @@ export const runLLM = async ({
   isParallel_tool_calls,
   systemPrompt,
 }: runLLM) => {
-  const formattedTools = tools?.map(zodFunction);
+  const formattedTools = tools.map(zodFunction);
   const response = await aiClient.chat.completions.create({
     model: model,
     messages: [
@@ -39,5 +39,5 @@ export const runLLM = async ({
     }),
   });
 
-  return response;
+  return response.choices[0];
 };

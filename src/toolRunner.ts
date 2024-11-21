@@ -1,6 +1,12 @@
 import { z } from "zod";
-import { generateImageDescription } from "./tools/generateImage.ts";
-import { generateImage } from "./tools/generateImage.ts";
+import {
+  generateImage,
+  generateImageDescription,
+} from "./tools/generateImage.ts";
+import {
+  fetchRedditPopularPage,
+  fetchRedditPopularPageDescription,
+} from "./tools/fetchReddit.ts";
 
 const toolCallFunction = z.object({
   name: z.string(),
@@ -24,6 +30,9 @@ export const toolRunner = async ({
   switch (toolCallFunction.name) {
     case generateImageDescription.name:
       return await generateImage(fnInput.args);
+
+    case fetchRedditPopularPageDescription.name:
+      return await fetchRedditPopularPage(fnInput.args);
     default:
       throw new Error(`Tool ${toolCallFunction.name} not found`);
   }

@@ -21,14 +21,14 @@ export const generateImage = async (toolArg: Args) => {
   try {
     const body = JSON.stringify({ inputs: toolArg.prompt });
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
+      "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell",
       {
-        method: "POST",
-        body: body,
         headers: {
-          Authorization: `Bearer ${process.env.HUGGING_FACE_API_KEY}`,
+          Authorization: `Bearer ${process.env.HF_API_KEY}`,
           "Content-Type": "application/json",
         },
+        method: "POST",
+        body: body,
       }
     );
 
@@ -37,7 +37,7 @@ export const generateImage = async (toolArg: Args) => {
     }
 
     const imageBuffer = await response.arrayBuffer();
-    const imagePath = `./generated_image_${new Date().toISOString()}.png`;
+    const imagePath = `./generated_image_${crypto.randomUUID()}.png`;
     await fs.writeFile(imagePath, Buffer.from(imageBuffer));
 
     return JSON.stringify({

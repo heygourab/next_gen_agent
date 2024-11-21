@@ -23,9 +23,7 @@ export const runAgent = async ({
   });
 
   while (true) {
-    const historyLoader = showLoader("Loading history...📜");
     const history = await fetchMessagesFromDB();
-    historyLoader.succeed("Done");
 
     const loader = showLoader("Thinking...💭");
     const response = await runLLM({
@@ -33,7 +31,7 @@ export const runAgent = async ({
       tools: tools || [],
     });
 
-    pushMessageToDB({ message: response.message });
+    await pushMessageToDB({ message: response.message });
     logMessage(response.message);
 
     if (response.message.content) {

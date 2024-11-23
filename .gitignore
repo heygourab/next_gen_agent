@@ -47,3 +47,6 @@ bower_components/
 *.pid
 *.seed
 *.pid.lock
+
+# Ignore db file
+*.json

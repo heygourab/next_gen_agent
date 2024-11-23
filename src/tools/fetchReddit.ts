@@ -11,8 +11,6 @@ export const fetchRedditPopularPageDescription = {
   }),
 };
 
-
-
 type Args = z.infer<typeof fetchRedditPopularPageDescription.parameters>;
 
 export const fetchRedditPopularPage = async (toolArg: Args) => {

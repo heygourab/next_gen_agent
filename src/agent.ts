@@ -2,7 +2,7 @@ import {
   pushMessageToDB,
   fetchMessagesFromDB,
   saveToolCallResponse,
-} from "../.vscode/index.ts";
+} from "../db/index.ts";
 import { logMessage, showLoader } from "./ui.ts";
 import { runLLM } from "./llm.ts";
 import { toolRunner } from "./toolRunner.ts";

@@ -6,6 +6,8 @@ import {
 import {
   fetchRedditPopularPage,
   fetchRedditPopularPageDescription,
+  fetchSubreddit,
+  fetchSubredditDescription,
 } from "./tools/fetchReddit.ts";
 
 const toolCallFunction = z.object({
@@ -33,6 +35,9 @@ export const toolRunner = async ({
 
     case fetchRedditPopularPageDescription.name:
       return await fetchRedditPopularPage(fnInput.args);
+
+    case fetchSubredditDescription.name:
+      return await fetchSubreddit(fnInput.args);
     default:
       throw new Error(`Tool ${toolCallFunction.name} not found`);
   }

@@ -34,7 +34,9 @@ export const runMovieAgent = async ({
     }
 
     if (response.message.tool_calls && !response.message.content) {
-      console.log(`tool call`);
+      console.log(
+        `tool_call name -- ${response.message.tool_calls[0].function.name}`
+      );
     }
   }
 };

@@ -6,6 +6,8 @@ import {
 import {
   fetchRedditPopularPage,
   fetchRedditPopularPageDescription,
+  fetchSubRedditDescription,
+  fetchSubReddit,
 } from "./tools/fetchReddit.ts";
 
 const toolCallFunction = z.object({
@@ -30,6 +32,9 @@ export const toolRunner = async ({
   switch (toolCallFunction.name) {
     case generateImageDescription.name:
       return await generateImage(fnInput.args);
+
+    case fetchSubRedditDescription.name:
+      return await fetchSubReddit(fnInput.args);
 
     case fetchRedditPopularPageDescription.name:
       return await fetchRedditPopularPage(fnInput.args);

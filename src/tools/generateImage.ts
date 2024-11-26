@@ -27,14 +27,12 @@ export const generateImageDescription = {
     targetSize: z.object({
       height: z
         .number()
-        .default(1024)
         .optional()
-        .describe("The height of the generated image."),
+        .describe("The height of the generated image. default size is 1024px"),
       width: z
         .number()
-        .default(1024)
         .optional()
-        .describe("The width of the generated image."),
+        .describe("The width of the generated image. default size is1024px"),
     }),
     seed: z
       .number()

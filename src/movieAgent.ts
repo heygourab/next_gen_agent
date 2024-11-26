@@ -1,7 +1,7 @@
 import { pushMessageToDB, fetchMessagesFromDB } from "../db/index.ts";
 import { runLLM } from "./llm.ts";
 import { logMessage, showLoader } from "./ui.ts";
-import { systemPrompt } from "./movieSystemPrompt.ts";
+
 
 export const runMovieAgent = async ({
   userMessage,
@@ -22,7 +22,6 @@ export const runMovieAgent = async ({
     const response = await runLLM({
       messages: history,
       tools: tools,
-      systemPrompt: systemPrompt,
     });
 
     if (response.message.content) {

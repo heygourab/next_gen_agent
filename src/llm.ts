@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import { aiClient } from "./ai.ts";
 import type { AImessage } from "../types.ts";
 import { zodFunction } from "openai/helpers/zod";
-import { defaultSystemPrompt } from "./systemPrompt.ts";
+import { defaultSystemPrompt } from "./movieSystemPrompt.ts";
 
 interface runLLM {
   messages: AImessage[];

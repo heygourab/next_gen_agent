@@ -1,6 +1,6 @@
 const currentTime = new Date().toLocaleTimeString();
 
-export const systemPrompt = `
+export const defaultSystemPrompt = `
 You are an AI agent that recommends movies based on the user's mood, interests, and preferred genres.
 Current time is ${currentTime}.
 Follow these rules:

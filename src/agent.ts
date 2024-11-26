@@ -1,11 +1,11 @@
-// import {
-//   pushMessageToDB,
-//   fetchMessagesFromDB,
-//   saveToolCallResponse,
-// } from '../db/index.test.ts';
-import { logMessage, showLoader } from "./ui.ts";
-import { runLLM } from "./llm.ts";
-import { toolRunner } from "./toolRunner.ts";
+import {
+  pushMessageToDB,
+  fetchMessagesFromDB,
+  saveToolCallResponse,
+} from "../db/index";
+import { logMessage, showLoader } from "./ui";
+import { runLLM } from "./llm";
+import { toolRunner } from "./toolRunner";
 
 // ai agent === tools + history
 export const runAgent = async ({

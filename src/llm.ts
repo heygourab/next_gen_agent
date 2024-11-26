@@ -1,8 +1,8 @@
 import OpenAI from "openai";
-import { aiClient } from "./ai.ts";
-import type { AImessage } from "../types.ts";
+import { aiClient } from "./ai";
+import type { AImessage } from "../types";
 import { zodFunction } from "openai/helpers/zod";
-import { defaultSystemPrompt } from "./systemPrompt.ts";
+import { defaultSystemPrompt } from "./systemPrompt";
 
 interface runLLM {
   messages: AImessage[];

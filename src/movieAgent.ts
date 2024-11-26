@@ -2,7 +2,6 @@ import { pushMessageToDB, fetchMessagesFromDB } from "../db/index.ts";
 import { runLLM } from "./llm.ts";
 import { logMessage, showLoader } from "./ui.ts";
 
-
 export const runMovieAgent = async ({
   userMessage,
   tools,

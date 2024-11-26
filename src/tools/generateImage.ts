@@ -49,6 +49,7 @@ export const generateImageDescription = {
 
 type Args = z.infer<typeof generateImageDescription.parameters>;
 
+//!todo api broken -- fix
 export const generateImage = async (toolArg: Args) => {
   try {
     const body = JSON.stringify({
@@ -56,16 +57,14 @@ export const generateImage = async (toolArg: Args) => {
       parameters: {
         guidance_scale: toolArg.guidanceScale,
         num_inference_steps: toolArg.numInferenceSteps,
-        target_size: {
-          height: toolArg.targetSize.height,
-          width: toolArg.targetSize.width,
-        },
+        height: toolArg.targetSize.height,
+        width: toolArg.targetSize.width,
         seed: toolArg.seed,
       },
     });
 
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/Jovie/Midjourney",
+      "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
       {
         headers: {
           Authorization: `Bearer ${process.env.HF_API_KEY}`,

@@ -85,11 +85,15 @@ export const fetchSubReddit = async (toolArg: SubRedditArgs) => {
       };
     });
 
-    return JSON.stringify({
-      success: true,
-      message: "Reddit popular page fetched successfully",
-      data: relevantData,
-    });
+    return JSON.stringify(
+      {
+        success: true,
+        message: "Reddit popular page fetched successfully",
+        data: relevantData,
+      },
+      null,
+      2
+    );
   } catch (error) {
     console.log(error);
   }

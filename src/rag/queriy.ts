@@ -1,9 +1,7 @@
-import { object, type number } from "zod";
+import type { QueryResult } from "@upstash/vector";
 import { index } from "./index.ts";
 
-// filter by the movie metaData;
-
-type Metadata = {
+export type Metadata = {
   title: string;
   genre: string;
   description: string;
@@ -19,19 +17,19 @@ type Metadata = {
 export const movieQuery = async (
   data: string,
   {
-    topK = 5,
+    topK = 2,
     filters,
     includeData = true,
-    includeVectors = true,
     includeMetadata = true,
+    includeVectors = false,
   }: {
     topK: number;
-    includeVectors: boolean;
-    includeMetadata: boolean;
-    includeData: boolean;
+    includeVectors?: boolean;
+    includeMetadata?: boolean;
+    includeData?: boolean;
     filters: Partial<Metadata> | undefined;
   }
-) => {
+): Promise<QueryResult[]> => {
   let filterStr: string = "";
   if (filters) {
     const filterParts = Object.entries(filters)

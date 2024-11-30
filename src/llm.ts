@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import { aiClient } from "./ai.ts";
 import type { AImessage } from "../types.ts";
 import { zodFunction } from "openai/helpers/zod";
-import { defaultSystemPrompt } from "./movieSystemPrompt.ts";
+import { defaultSystemPrompt } from "./defaultSystemPrompt.ts";
 
 interface runLLM {
   messages: AImessage[];
@@ -11,6 +11,7 @@ interface runLLM {
   tools: any[];
   isParallel_tool_calls?: boolean;
   systemPrompt?: string;
+  maxToken?: number;
 }
 
 export const runLLM = async ({
@@ -20,6 +21,7 @@ export const runLLM = async ({
   model = "gpt-4o-mini-2024-07-18",
   isParallel_tool_calls,
   systemPrompt,
+  maxToken = 200,
 }: runLLM) => {
   const formattedTools = tools.map(zodFunction);
   const response = await aiClient.chat.completions.create({
@@ -37,6 +39,7 @@ export const runLLM = async ({
       tool_choice: "auto",
       parallel_tool_calls: isParallel_tool_calls,
     }),
+    max_tokens: maxToken,
   });
 
   return response.choices[0];

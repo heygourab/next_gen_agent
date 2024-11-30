@@ -1,6 +1,5 @@
 import process from "node:process";
-import { tools } from "./src/tools/index.ts";
-import { runMovieAgent } from "./src/movieAgent.ts";
+import { movieSearchAgent } from "./src/agents/search/movieSearchAgent.ts";
 
 const userMessage = process.argv[2];
 
@@ -9,5 +8,6 @@ if (!userMessage) {
   process.exit(1);
 }
 
+await movieSearchAgent(userMessage);
 
-await runMovieAgent({ userMessage: userMessage, tools: [] });
+// await movieSearchAgent(userMessage);

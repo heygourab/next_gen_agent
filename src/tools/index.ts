@@ -1,1 +1,3 @@
-export const tools = [];
+import { movieSearchDescription } from "./movieSearchTool";
+
+export const tools = [movieSearchDescription];

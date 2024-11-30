@@ -26,7 +26,13 @@ const defaultData: Data = {
   messages: [],
 };
 
-const getDB = async () => await JSONFilePreset<Data>("./db.json", defaultData);
+const getDB = async (dbName?: string) => {
+  const db = await JSONFilePreset<Data>(
+    `${dbName ?? "./db.json"}`,
+    defaultData
+  );
+  return db;
+};
 
 export const pushMessageToDB = async ({ message }: { message: AImessage }) => {
   const db = await getDB();

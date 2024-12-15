@@ -91,7 +91,7 @@ export const movieSearch = async (toolArgs: ToolArgs) => {
 
   try {
     const result = await movieQuery(data, {
-      topK: 1,
+      topK: 5,
       filters,
     });
 
@@ -103,7 +103,6 @@ export const movieSearch = async (toolArgs: ToolArgs) => {
       };
     });
 
-    console.log(movies);
     return movies;
   } catch (error) {
     console.error("Error occurred during movie search:", error);

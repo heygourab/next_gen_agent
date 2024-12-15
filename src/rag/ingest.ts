@@ -29,11 +29,11 @@ const indexMovieData = async () => {
         description: movie.Description,
         actors: movie.Actors,
         director: movie.Director,
-        year: movie.Year,
-        runtime: movie.Runtime,
-        rating: movie.Rating,
-        revenue: movie.Revenue,
-        metascore: movie.Metascore,
+        year: Number(movie.Year),
+        runtime: Number(movie.Runtime),
+        rating: Number(movie.Rating),
+        revenue: Number(movie.Revenue),
+        metascore: Number(movie.Metascore),
       },
     });
   });

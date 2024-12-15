@@ -17,7 +17,7 @@ export type Metadata = {
 export const movieQuery = async (
   data: string,
   {
-    topK = 2,
+    topK = 5,
     filters,
     includeData = true,
     includeMetadata = true,

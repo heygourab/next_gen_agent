@@ -1,5 +1,5 @@
 import { JSONFilePreset } from "lowdb/node";
-import type { AImessage } from "../types.ts";
+import type { AImessage } from "../types";
 import { randomUUID } from "node:crypto";
 
 export type MessageWithMetaData = AImessage & {
@@ -26,13 +26,7 @@ const defaultData: Data = {
   messages: [],
 };
 
-const getDB = async (dbName?: string) => {
-  const db = await JSONFilePreset<Data>(
-    `${dbName ?? "./db.json"}`,
-    defaultData
-  );
-  return db;
-};
+const getDB = async () => await JSONFilePreset<Data>("./db.json", defaultData);
 
 export const pushMessageToDB = async ({ message }: { message: AImessage }) => {
   const db = await getDB();
@@ -60,3 +54,9 @@ export const saveToolCallResponse = async ({
       tool_call_id: tool_call_id,
     },
   });
+
+export const clearDB = async () => {
+  const db = await getDB();
+  db.data.messages = [];
+  db.write();
+};

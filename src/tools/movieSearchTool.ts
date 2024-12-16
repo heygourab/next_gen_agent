@@ -4,57 +4,73 @@ import { movieQuery } from "../rag/query.ts";
 export const movieSearchDescription = {
   name: "movieSearch",
   description:
-    "This tool is used to searching for movies from the user input. For example, the user might want to search for a movie with a title 'The Dark Knight' or a movie with a genre 'horror'.",
+    "A comprehensive movie search tool that allows users to find movies using various criteria. This tool helps users discover films by specific attributes like title, genre, cast, or other detailed parameters. Whether you're looking for a specific movie or exploring films based on multiple filters, this search function provides flexible and precise movie discovery.",
   parameters: z.object({
-    data: z
+    query: z
       .string()
       .describe(
-        "Query string for the query the movie that going to be search."
+        "The primary search query string for finding movies. This could be a partial title, keyword, or general search term to match against multiple movie attributes."
       ),
     filters: z.object({
-      title: z.string().describe("Title of the movie."),
+      title: z
+        .string()
+        .describe(
+          "Exact or partial movie title to search for. For instance, searching for 'Inter' could return movies like 'Interstellar' or 'Interstella 5555'."
+        ),
       genre: z
         .string()
         .optional()
-        .describe("Genre of the movie, for example: horror, comedy."),
+        .describe(
+          "Specific movie genre to filter results. Examples include 'sci-fi', 'drama', 'comedy', 'thriller', or 'documentary'. Helps narrow down movie selections to a particular style or type."
+        ),
       description: z
         .string()
         .optional()
         .describe(
-          "Description of the movie for example user might want to search for a movie with a description that contains the word 'love'."
+          "Search within movie descriptions to find films with specific themes or plot elements. For example, searching for 'space exploration', 'love story', or 'historical drama' can help find movies with particular narrative focuses."
         ),
       actors: z
         .string()
         .array()
         .optional()
-        .describe("name of the movie actors, for example: ['Tom Cruise']."),
+        .describe(
+          "List of actor names to filter movies. Useful for finding films featuring specific performers. For example, ['Leonardo DiCaprio', 'Tom Hanks'] would return movies starring either of these actors."
+        ),
       director: z
         .string()
         .optional()
         .describe(
-          "Name of the movie director, for example: 'Steven Spielberg'."
+          "Name of the movie director to filter results. Helps users find films by their favorite or most respected filmmakers, like 'Christopher Nolan' or 'Quentin Tarantino'."
         ),
       year: z
         .number()
         .optional()
-        .describe("Movie release year. for example: 2000."),
+        .describe(
+          "Release year of the movie. Allows searching for films from a specific year or era. For instance, '2010' would return movies released in that particular year."
+        ),
+      rating: z
+        .number()
+        .optional()
+        .describe(
+          "Movie rating on a scale of 1-10. Helps users find highly rated films or filter out lower-rated movies. For example, '8' would return movies with a rating of 8 or higher."
+        ),
       runtime: z
         .number()
         .optional()
         .describe(
-          "Movie runtime in minutes, for example: 60mins means 1 hour."
+          "Movie duration in minutes. Helps users find movies of a specific length. For example, '120' would return movies around 2 hours long, while '90' might indicate shorter films."
         ),
       revenue: z
         .number()
         .optional()
         .describe(
-          "Movie revenue in million, for example: 100 means 100 million."
+          "Total movie revenue in millions of dollars. Can be used to find blockbuster hits or more niche productions. For example, '500' would return movies that grossed around 500 million dollars."
         ),
       metascore: z
         .number()
         .optional()
         .describe(
-          "A Metascore is a score (0-100) from Metacritic that aggregates professional reviews for movies."
+          "Critical rating from Metacritic, ranging from 0-100. Helps users find critically acclaimed movies. A score of 80+ typically indicates highly praised films, while lower scores might represent more mixed critical reception."
         ),
     }),
   }),
@@ -63,7 +79,7 @@ export const movieSearchDescription = {
 type ToolArgs = z.infer<typeof movieSearchDescription.parameters>;
 
 export const movieSearch = async (toolArgs: ToolArgs) => {
-  const data = toolArgs.data;
+  const data = toolArgs.query;
 
   const {
     title,
@@ -91,7 +107,7 @@ export const movieSearch = async (toolArgs: ToolArgs) => {
 
   try {
     const result = await movieQuery(data, {
-      topK: 5,
+      topK: 10,
       filters,
     });
 
@@ -103,7 +119,7 @@ export const movieSearch = async (toolArgs: ToolArgs) => {
       };
     });
 
-    return movies;
+    return JSON.stringify(movies, null, 2);
   } catch (error) {
     console.error("Error occurred during movie search:", error);
   }

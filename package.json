@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "node --env-file=.env --experimental-strip-types index.ts",
     "ingest": "node --env-file=.env --experimental-strip-types src/rag/ingest.ts",
-    "dev": "node --env-file=.env --experimental-strip-types --watch app.ts"
+    "server": "node --env-file=.env --experimental-strip-types --watch app.ts"
   },
   "author": "",
   "license": "ISC",

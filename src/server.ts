@@ -13,4 +13,4 @@ app.get("/", (req: express.Request, res: express.Response) => {
   res.send("Hello World!");
 });
 
-app.post("/search", handelRequest);
+app.get("/search", handelRequest);

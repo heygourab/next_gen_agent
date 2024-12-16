@@ -6,10 +6,14 @@ export const handelRequest = async (
   res: express.Response
 ) => {
   let response = await movieSearchAgent(req.body.search);
+
   if (response.includes("```")) {
     response = response.replace("```", "");
   }
 
-  let responseJSON = JSON.parse(response);
-  res.json(responseJSON);
+  if (response.toLowerCase() === "no direct match found") {
+    res.json({ title: null });
+  }
+
+  res.json({ title: response });
 };

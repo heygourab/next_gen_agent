@@ -1,16 +1,29 @@
-import type { AImessage } from "../../../types.ts";
 import { runLLM } from "../../llm.ts";
 import { toolRunner } from "../../toolRunner.ts";
 import { movieSearchDescription } from "../../tools/movieSearchTool.ts";
 import { searchSystemPrompt } from "./movieSearchSystemPrompt.ts";
+import {
+  clearDB,
+  fetchMessagesFromDB,
+  pushMessageToDB,
+  saveToolCallResponse,
+} from "../../../db/index.ts";
+import { logMessage } from "../../ui.ts";
 
 export const movieSearchAgent = async (userSearch: string) => {
-  const history: AImessage[] = [{ role: "user", content: userSearch }];
-  const MAX_RETRIES = 5; // Define a maximum retry count
+  await pushMessageToDB({
+    message: {
+      role: "user",
+      content: userSearch,
+    },
+  });
+
+  const MAX_RETRIES = 5;
   let attempts = 0;
 
   while (attempts < MAX_RETRIES) {
-    console.log(history);
+    const history = await fetchMessagesFromDB();
+
     try {
       // Interact with the language model
       const response = await runLLM({
@@ -19,14 +32,16 @@ export const movieSearchAgent = async (userSearch: string) => {
         model: "gpt-4o-mini-2024-07-18",
         systemPrompt: searchSystemPrompt,
         maxToken: 400,
+        isParallel_tool_calls: false,
       });
 
       // Add the model's response to the history
-      history.push(response.message);
+      await pushMessageToDB(response);
 
       // If the model provides a direct answer, return it
       if (response.message.content) {
-        console.log("Final Response:", response.message.content);
+        logMessage(response.message);
+        await clearDB();
         return response.message.content;
       }
 
@@ -36,20 +51,17 @@ export const movieSearchAgent = async (userSearch: string) => {
         response.message.tool_calls.length > 0
       ) {
         const toolCall = response.message.tool_calls[0];
-
+        logMessage(response.message);
         if (toolCall.function) {
-          const result = await toolRunner({
+          const functionResponse = await toolRunner({
             toolCallFunction: toolCall.function,
             userMessage: userSearch,
           });
+          console.log(functionResponse);
 
-          console.log("Tool Result:", result);
-
-          // Add the tool's result to the history
-          history.push({
-            role: "tool",
+          await saveToolCallResponse({
             tool_call_id: toolCall.id,
-            content: `${result}`,
+            toolCallResponse: functionResponse ?? "No response",
           });
         }
       }

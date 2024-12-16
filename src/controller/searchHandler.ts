@@ -15,5 +15,13 @@ export const handelRequest = async (
     res.json({ title: null });
   }
 
+  if (response.toLowerCase() === "no match found") {
+    res.json({ title: null });
+  }
+
+  if (response.includes(`"`)) {
+    response = response.replace(/"/g, "");
+  }
+
   res.json({ title: response });
 };

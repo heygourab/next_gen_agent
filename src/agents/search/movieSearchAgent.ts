@@ -10,6 +10,7 @@ import {
 } from "../../../db/index.ts";
 import { logMessage } from "../../ui.ts";
 
+
 export const movieSearchAgent = async (userSearch: string) => {
   await pushMessageToDB({
     message: {
@@ -67,8 +68,10 @@ export const movieSearchAgent = async (userSearch: string) => {
       }
     } catch (error) {
       console.error("Error occurred during agent execution:", error);
+      await clearDB();
+    } finally {
+      // todo -
     }
-
     attempts++;
   }
 

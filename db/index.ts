@@ -58,6 +58,8 @@ export const saveToolCallResponse = async ({
 
 export const clearDB = async () => {
   const db = await getDB();
-  db.data.messages = [];
+  if (db.data.messages.length > 0) {
+    db.data.messages = [];
+  }
   db.write();
 };

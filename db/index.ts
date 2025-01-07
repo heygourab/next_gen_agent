@@ -34,10 +34,10 @@ export const pushMessageToDB = async ({ message }: { message: AImessage }) => {
   await db.write();
 };
 
-export const fetchMessagesFromDB = async (): Promise<AImessage[]> => {
+export const fetchMessagesFromDB = async () => {
   const db = await getDB();
-  db.data.messages.map((message) => removeMetaData);
-  return db.data.messages;
+  const messages = db.data.messages.map((message) => removeMetaData);
+  return messages;
 };
 
 export const saveToolCallResponse = async ({

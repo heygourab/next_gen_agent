@@ -6,6 +6,6 @@ This project was developed as part of a college assignment and is the intellectu
 
 ## License
 
-This project is proprietary and owned by **Gourab Sarkar**.  
+This project is proprietary and owned by **Gourab Sarkar** & **Biswarup Das**
 Unauthorized use, reproduction, modification, or distribution is prohibited without explicit permission.  
 See the [LICENSE](LICENSE) file for details.
